@@ -8,11 +8,13 @@ from project.tests.base import BaseTestCase
 from project import db
 from project.api.models import User
 
+
 def add_user(username, email):
     user = User(username=username, email=email)
     db.session.add(user)
     db.session.commit()
     return user
+
 
 class TestUserService(BaseTestCase):
     """Tests for the Users Service."""
@@ -55,7 +57,8 @@ class TestUserService(BaseTestCase):
             self.assertIn('fail', data['status'])
 
     def test_add_user_invalid_json_keys(self):
-        """Ensure error is thrown if the JSON object does not have a username key."""
+        """Ensure error is thrown if the JSON object
+         does not have a username key."""
         with self.client:
             response = self.client.post(
                 '/users',
@@ -90,7 +93,7 @@ class TestUserService(BaseTestCase):
             self.assertEqual(response.status_code, 400)
             self.assertIn(
                 'Sorry. That email already exists.', data['message'])
-            self.assertIn('fail', data['status'])            
+            self.assertIn('fail', data['status'])
 
     def test_single_user(self):
         """Ensure get single user behaves correctly."""
@@ -137,7 +140,7 @@ class TestUserService(BaseTestCase):
             self.assertIn(
                 'fletcher@realpython.com', data['data']['users'][1]['email'])
             self.assertIn('success', data['status'])
-            
+
     def test_main_no_users(self):
         """Ensure the main route behaves correctly when no users have been
         added to the database."""
@@ -171,7 +174,7 @@ class TestUserService(BaseTestCase):
             self.assertIn(b'<h1>All Users</h1>', response.data)
             self.assertNotIn(b'<p>No users!</p>', response.data)
             self.assertIn(b'michael', response.data)
-        
+
 
 if __name__ == '__main__':
     unittest.main()

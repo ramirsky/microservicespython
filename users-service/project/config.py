@@ -11,6 +11,7 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'my_precious'
 
+
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     DEBUG = True
